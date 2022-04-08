@@ -6,7 +6,7 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/BAS</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/bookshop_automation_system</property>
 		<property name="connection.username">pr</property>
 		<property name="connection.password">password</property>
 	

@@ -21,7 +21,7 @@ public class NotInCollectionDao {
 		try
 		{
 			//check if the book has already been requested for before
-			Query newQuery=session.createQuery("from NotInCollection where ISBNCode = :isbn");
+			Query newQuery=session.createQuery("from NotInCollection where ISBN = :isbn");
 			newQuery.setParameter("isbn", request.getISBNCode());
 			List<NotInCollection> req=newQuery.list();
 			if(req==null || req.isEmpty())
@@ -58,7 +58,7 @@ public class NotInCollectionDao {
 		
 		try
 		{
-			Query query=session.createQuery("from NotInCollection WHERE ISBNCode= :isbn");
+			Query query=session.createQuery("from NotInCollection WHERE ISBN = :isbn");
 			query.setParameter("isbn", ISBN);
 			List<NotInCollection> request=query.list();
 			for(NotInCollection c: request)
@@ -85,7 +85,7 @@ public class NotInCollectionDao {
 		List<NotInCollection> list=null;
 		try
 		{
-			Query query=session.createQuery("from NotInCollection order by noOfRequests desc");
+			Query query=session.createQuery("from NotInCollection order by number_of_requests desc");
 			list=query.list();
 			//session.close();
 			return list;

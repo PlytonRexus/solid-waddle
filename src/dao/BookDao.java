@@ -108,7 +108,7 @@ public class BookDao {
 		SessionFactory factory= configuration.buildSessionFactory();
 		Session session=factory.openSession();
 		session.beginTransaction();
-		Query query=session.createQuery("from Book where bookTitle = :thetitle");
+		Query query=session.createQuery("from Book where title = :thetitle");
 		query.setString("thetitle",title);
 		List<Book> bookList=(List<Book>)query.list();
 		session.close();
@@ -122,8 +122,9 @@ public class BookDao {
 		SessionFactory factory= configuration.buildSessionFactory();
 		Session session=factory.openSession();
 		session.beginTransaction();
-		Query query=session.createQuery("from Book where authorName = :authorname");
+		Query query=session.createQuery("from Book where author_name = :authorname");
 		query.setString("authorname", authorName.toUpperCase());
+		System.out.println(query.getQueryString());
 		List<Book> bookList=(List<Book>)query.list();
 		session.close();
 		return bookList;
@@ -189,7 +190,7 @@ public class BookDao {
 		session.beginTransaction();
 		try
 		{
-			Query query=session.createQuery("from Book b where b.noOfRequests>0 order by b.noOfRequests desc");
+			Query query=session.createQuery("from Book b where b.number_of_requests > 0 order by b.number_of_requests desc");
 			List<Book> list=query.list();
 			return list;
 		}
@@ -247,7 +248,7 @@ public class BookDao {
 		session.beginTransaction();
 		try
 		{
-			Query query=session.createQuery("from Book where noOfCopies<threshold");
+			Query query=session.createQuery("from Book where number_of_copies < threshold");
 			List<Book> list=query.list();
 			return list;
 		}

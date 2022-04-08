@@ -4,14 +4,14 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 	
 <hibernate-mapping package="model">
-<class name="NotInCollection" table="notInCollection">
-	<id name="requestId" column="request_id">
+<class name="NotInCollection" table="book_requests">
+	<id name="requestId" column="id">
 	<generator class="native"></generator>
 	</id>
-	<property name="noOfRequests" column="noOfRequests"></property>
-	<property name="bookTitle" column="bookTitle"></property>
-	<property name="authorName" column="authorName"></property>
-	<property name="publisherName" column="publisherName"></property>
-	<property name="ISBNCode" column="ISBNCode"></property>
+	<property name="noOfRequests" column="number_of_requests"></property>
+	<property name="bookTitle" column="title"></property>
+	<property name="authorName" column="author_name"></property>
+	<property name="publisherName" column="publisher_name"></property>
+	<property name="ISBNCode" column="ISBN"></property>
 </class>
 </hibernate-mapping>

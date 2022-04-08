@@ -1,3 +1,9 @@
+/**
+ * - [x] Shift search to log in page
+ * - [x] Change db  name, table names, column names
+ * - [ ] Change username password
+ */
+
 package employee_view;
 
 import java.awt.BorderLayout;
@@ -24,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -34,12 +41,12 @@ import org.hibernate.SessionFactory;
 import com.toedter.calendar.JDateChooser;
 
 import dao.BookDao;
+import dao.EmployeeDao;
 import dao.InitialiseSFHibernate;
 import dao.NotInCollectionDao;
 import dao.PublisherDao;
 import dao.TransactionDao;
 import dao.VendorDao;
-import javafx.scene.image.Image;
 import model.Book;
 import model.Cart;
 import model.CartItem;
@@ -47,6 +54,7 @@ import model.NotInCollection;
 import model.Publisher;
 import model.Transaction;
 import model.Vendor;
+import model.Employee;
 import pdfwriter.ReportViewer;
 import pdfwriter.ReportWriter;
 import views.ErrorDialog;
@@ -86,8 +94,7 @@ public class Interface {
 	private static JTextField textField_21;
 	private static JTextField textField_22;
 	private static JTextField txtIsbnOwner;
-	public static Integer sessionID; // 1 owner 2 manager 3 sales-clerk 4
-										// employee
+	public static Integer sessionID;
 
 	public static void application() {
 
@@ -118,11 +125,11 @@ public class Interface {
 
 		Customer.setBackground(Color.black);
 		loginPanel.setBackground(Color.YELLOW);
-		viewBook.setBackground(Color.red);
-		salesclerkPanel.setBackground(Color.cyan);
-		generalPanel.setBackground(Color.cyan);
-		newPublisherPanel.setBackground(Color.cyan);
-		newVendorPanel.setBackground(Color.cyan);
+		viewBook.setBackground(Color.green);
+		salesclerkPanel.setBackground(Color.orange);
+		generalPanel.setBackground(Color.magenta);
+		newPublisherPanel.setBackground(Color.pink);
+		newVendorPanel.setBackground(Color.green);
 		belowThresholdPanel.setBackground(Color.cyan);
 		Query.setBackground(Color.red);
 		Employee.setBackground(Color.cyan);
@@ -131,7 +138,7 @@ public class Interface {
 		absentPanel.setBackground(Color.cyan);
 		presentPanel.setBackground(Color.cyan);
 		requestsPanel.setBackground(Color.cyan);
-		managerPanel.setBackground(Color.cyan);
+		managerPanel.setBackground(Color.red);
 		genreceiptPanel.setBackground(Color.cyan);
 
 		window.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -139,7 +146,8 @@ public class Interface {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		window.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		tabbedPane.addTab("Buyer Screen", null, Customer, "Screen for customers");
+//		tabbedPane.addTab("Buyer Screen", null, Customer, "Screen for customers");
+		
 		CardLayout customerCard = new CardLayout(0, 0);
 		Customer.setLayout(customerCard);
 
@@ -208,16 +216,6 @@ public class Interface {
 		button.setBounds(10, 399, 121, 23);
 		viewBook.add(button);
 
-		/*
-		 * JButton btnAddToCart = new JButton("Add to cart");
-		 * btnAddToCart.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent arg0) {
-		 * viewBook.setVisible(false); paymentPanel.setVisible(true);
-		 * 
-		 * } }) btnAddToCart.setBounds(280, 409, 118, 23);
-		 * viewBook.add(btnAddToCart);
-		 */
 		JLabel lblRackNumber = new JLabel("Rack Number : ");
 		lblRackNumber.setBounds(136, 304, 164, 14);
 		viewBook.add(lblRackNumber);
@@ -274,27 +272,21 @@ public class Interface {
 		orderBookPanel.add(textField_16);
 		textField_16.setColumns(10);
 
-		Customer.add(Query, "name_22829458616742");
-		Query.setLayout(null);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(40, 160, 1000, 400);
-		Query.add(scrollPane_1);
-		
-		scrollPane_1.setVisible(false);
-		
+//		Employee.add(Query, "name_22829458616742");
+//		Query.setLayout(null);
+
 		/**
 		 * Search by title
 		 */
 
 		textField = new JTextField();
-		textField.setBounds(40, 41, 280, 20);
-		Query.add(textField);
+		textField.setBounds(40, 141, 280, 20);
+		loginPanel.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnSearch = new JButton("Search by book title");
-		btnSearch.setBounds(360, 40, 180, 23);
-		Query.add(btnSearch);
+		btnSearch.setBounds(360, 140, 180, 23);
+		loginPanel.add(btnSearch);
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		
 		/**
@@ -302,40 +294,33 @@ public class Interface {
 		 */
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(580, 41, 280, 20);
-		Query.add(textField_1);
+		textField_1.setBounds(580, 141, 280, 20);
+		loginPanel.add(textField_1);
 		textField_1.setColumns(10);
 
 		JButton btnSearch_1 = new JButton("Search by author");
-		btnSearch_1.setBounds(880, 40, 180, 23);
-		Query.add(btnSearch_1);
+		btnSearch_1.setBounds(880, 140, 180, 23);
+		loginPanel.add(btnSearch_1);
 		btnSearch_1.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		
-		/*
-		 * JLabel lblMyCart = new JLabel("My Cart"); lblMyCart.setBounds(557,
-		 * 117, 46, 20); Query.add(lblMyCart);
-		 * 
-		 * JList list = new JList(); list.setBounds(493, 136, 164, 246);
-		 * Query.add(list);
-		 * 
-		 * JButton btnEditCart = new JButton("Edit Cart");
-		 * btnEditCart.setBounds(486, 382, 75, 23); Query.add(btnEditCart);
-		 * 
-		 * JButton btnDeleteCart = new JButton("Delete Cart");
-		 * btnDeleteCart.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent arg0) { } });
-		 * btnDeleteCart.setFont(new Font(Font.SERIF, Font.PLAIN, 11));
-		 * btnDeleteCart.setBounds(590, 382, 89, 23); Query.add(btnDeleteCart);
-		 * 
-		 * JButton btnFinaliseCart = new JButton("Finalise Cart");
-		 * btnFinaliseCart.setBounds(527, 409, 103, 23);
-		 * Query.add(btnFinaliseCart);
+		/**
+		 * View selected book button
 		 */
+		
 		JButton btnViewSelectedBook = new JButton("View selected book");
-		btnViewSelectedBook.setBounds(420, 100, 252, 23);
+		btnViewSelectedBook.setBounds(420, 200, 252, 23);
 		btnViewSelectedBook.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		Query.add(btnViewSelectedBook);
+		loginPanel.add(btnViewSelectedBook);
+
+		/**
+		 * Book list scroll pane
+		 */
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(40, 260, 1050, 400);
+		loginPanel.add(scrollPane_1);
+		
+		scrollPane_1.setVisible(false);
 
 		// JList for book query
 		DefaultListModel<String> model = new DefaultListModel<>();
@@ -344,16 +329,16 @@ public class Interface {
 		scrollPane_1.setViewportView(queryBookList);
 
 		/**
-		 * --------------------------------------
+		 * ======================================
 		 * 
 		 * Administration panel
 		 * 
-		 * --------------------------------------
+		 * ======================================
 		 */
 
 		// adding to the customer tab
-		Customer.add(viewBook, "name_25346409520612");
-		Customer.add(orderBookPanel, "name_117790567923386");
+		Employee.add(viewBook, "name_25346409520612");
+		Employee.add(orderBookPanel, "name_117790567923386");
 
 		JButton button_1 = new JButton("Go back");
 		button_1.setBounds(10, 399, 89, 23);
@@ -363,52 +348,58 @@ public class Interface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Query.setVisible(true);
+//				Query.setVisible(true);
+				loginPanel.setVisible(true);
 				orderBookPanel.setVisible(false);
 			}
 		});
-
+		
 		tabbedPane.addTab("Administration Screen", null, Employee, null);
 		CardLayout employeeCard = new CardLayout(0, 0);
 		Employee.setLayout(employeeCard);
 
 		Employee.add(loginPanel, "name_22371360198077");
+//		Employee.add(Customer, "name_97364536879765");
+		
 		loginPanel.setLayout(null);
 
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font(Font.SERIF, Font.PLAIN, 14));
-		lblUsername.setBounds(209, 133, 94, 14);
+		lblUsername.setBounds(169, 44, 94, 14);
 		loginPanel.add(lblUsername);
 		
 		txtUsername = new JTextField();
-		txtUsername.setBounds(338, 131, 149, 20);
+		txtUsername.setBounds(298, 40, 149, 20);
 		loginPanel.add(txtUsername);
 		txtUsername.setColumns(10);
 
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font(Font.SERIF, Font.PLAIN, 14));
-		lblPassword.setBounds(550, 133, 79, 14);
+		lblPassword.setBounds(510, 44, 79, 14);
 		loginPanel.add(lblPassword);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(674, 131, 149, 23);
+		passwordField.setBounds(634, 40, 149, 23);
 		loginPanel.add(passwordField);
 
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font(Font.SERIF, Font.PLAIN, 14));
 
-		btnLogin.setBounds(460, 200, 120, 35);
+		btnLogin.setBounds(860, 36, 120, 35);
 		loginPanel.add(btnLogin);
+		
+		JSeparator hr_1 = new JSeparator();
+		hr_1.setBounds(30, 90, 1050, 20);
+		loginPanel.add(hr_1);
 
 		Employee.add(salesclerkPanel, "name_90015226973982");
 		salesclerkPanel.setLayout(null);
 
-		JButton btnNewButton = new JButton("Generate Receipt");
+		JButton btnNewButton = new JButton("Generate receipt");
 		btnNewButton.setBounds(186, 168, 201, 36);
 		salesclerkPanel.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Update database");
+		JButton btnNewButton_1 = new JButton("Add new or update quantity");
 		btnNewButton_1.setBounds(186, 239, 201, 36);
 		salesclerkPanel.add(btnNewButton_1);
 
@@ -852,11 +843,11 @@ public class Interface {
 		btnViewNotInStock.setBounds(213, 337, 282, 33);
 		managerPanel.add(btnViewNotInStock);
 		
-		JButton generate = new JButton("Generate receipt");
-		generate.setBounds(510, 202, 282, 33);
-		managerPanel.add(generate);
+//		JButton generate = new JButton("Generate receipt");
+//		generate.setBounds(510, 202, 282, 33);
+//		managerPanel.add(generate);
 
-		JLabel lblLoggedInAs_3 = new JLabel("Logged in as : Manager");
+		JLabel lblLoggedInAs_3 = new JLabel("Hello, Mr, Manager!");
 		lblLoggedInAs_3.setBounds(308, 15, 238, 14);
 		managerPanel.add(lblLoggedInAs_3);
 		// Owner.setLayout(null);
@@ -912,6 +903,8 @@ public class Interface {
 			public void actionPerformed(ActionEvent arg0) {
 				textField_5.setText("");
 				textField_7.setText("");
+//				Query.setVisible(false);
+//				loginPanel.setVisible(false);
 				if (sessionID == 3) {
 					genreceiptPanel.setVisible(false);
 					salesclerkPanel.setVisible(true);
@@ -926,7 +919,7 @@ public class Interface {
 		genreceiptPanel.add(button_5);
 		// textField_7.setText("av");
 
-		Query.setVisible(true);
+//		Query.setVisible(true);
 		viewBook.setVisible(false);
 		managerPanel.setVisible(false);
 		generalPanel.setVisible(false);
@@ -1016,46 +1009,43 @@ public class Interface {
 		});
 
 		btnLogin.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// hardcoding the login for now
-				// System.out.println(txtUsername.getText() + " " +
-				// passwordField.getText());
-				if (txtUsername.getText().equals("manager") && passwordField.getText().equals("manager123")) {
-
-					// new SuccessDialog().invoke("Successful login as
-					// manager");
-					new ToastMessage("Successful login", 500).setVisible(true);
-
-					loginPanel.setVisible(false);
-					managerPanel.setVisible(true);
-					sessionID = 2;
-				} else if (txtUsername.getText().equals("salesclerk")
-						&& passwordField.getText().equals("salesclerk123")) {
-					new ToastMessage("Successful login", 500).setVisible(true);
-					cart = new Cart();
-					loginPanel.setVisible(false);
-					salesclerkPanel.setVisible(true);
-					sessionID = 3;
-				} else if (passwordField.getText().equals("emp123") && (txtUsername.getText().equals("emp1")
-						|| txtUsername.getText().equals("emp2") || txtUsername.getText().equals("emp3"))) {
+				// hardcode the login for now
+				
+				String username = txtUsername.getText();
+				String password = passwordField.getText();
+				EmployeeDao employeeDao = new EmployeeDao();
+				
+				Employee employee = employeeDao.verifyIdentity(username, password);
+				
+				if (employee != null) {
 					new ToastMessage("Successful login", 500).setVisible(true);
 					loginPanel.setVisible(false);
-					generalPanel.setVisible(true);
-					sessionID = 4;
-
-					back_button_8.setVisible(false);
-
-				} else if (passwordField.getText().equals("owner123") && txtUsername.getText().equals("owner")) {
-					new ToastMessage("Successful login", 500).setVisible(true);
-					loginPanel.setVisible(false);
-					ownerPanel.setVisible(true);
-					sessionID = 1;
+					
+					switch (employee.getEmpCode()) {
+						case 1:
+							ownerPanel.setVisible(true);
+							break;
+						case 2:
+							managerPanel.setVisible(true);
+							break;
+						case 3:
+							cart = new Cart();
+							salesclerkPanel.setVisible(true);
+							break;
+						case 4:
+							generalPanel.setVisible(true);
+							back_button_8.setVisible(false);
+							break;
+					}
+					
+					sessionID = employee.getEmpCode();
 				} else {
 					new ErrorDialog().invoke("Incorrect credentials");
 					passwordField.setText("");
 				}
-
 			}
 		});
 
@@ -1082,7 +1072,8 @@ public class Interface {
 			public void actionPerformed(ActionEvent arg0) {
 
 				viewBook.setVisible(false);
-				Query.setVisible(true);
+//				Query.setVisible(true);
+				loginPanel.setVisible(true);
 			}
 		});
 
@@ -1105,8 +1096,7 @@ public class Interface {
 						textField_12.setText("");
 						textField_13.setText("");
 						textField_14.setText("");
-						textField_22.setText(""); // TODO : What is this
-													// @Bhagwat!!
+						textField_22.setText("");
 						textField_8.setText("");
 						txtBookTitle.setText("");
 						txtAuthorName.setText("");
@@ -1133,12 +1123,16 @@ public class Interface {
 					}
 					List<Book> bookList = new BookDao().getBooksByTitle(title);
 					if (bookList == null || bookList.isEmpty()) {
-						JDialog.setDefaultLookAndFeelDecorated(true);
-						int response = JOptionPane.showConfirmDialog(Query,
+//						JDialog.setDefaultLookAndFeelDecorated(true);
+//						int response = JOptionPane.showConfirmDialog(Query,
+//								"No such book in database! Do you want to request for it?", "Not in database",
+//								JOptionPane.INFORMATION_MESSAGE);
+						int response = JOptionPane.showConfirmDialog(loginPanel,
 								"No such book in database! Do you want to request for it?", "Not in database",
 								JOptionPane.INFORMATION_MESSAGE);
 						if (response == JOptionPane.YES_OPTION) {
-							Query.setVisible(false);
+//							Query.setVisible(false);
+							loginPanel.setVisible(false);
 							orderBookPanel.setVisible(true);
 						}
 						return;
@@ -1147,10 +1141,12 @@ public class Interface {
 					model.removeAllElements();
 					for (Book b : bookList) {
 						model.addElement(capitalizeFirstLetter(b.getBookTitle().toLowerCase()) + " by "
-								+ capitalizeFirstLetter(b.getAuthorName().toLowerCase()) + "   ISBN :" + b.getISBN());
+								+ capitalizeFirstLetter(b.getAuthorName().toLowerCase()) + ", ISBN :" + b.getISBN());
 					}
 
 				} catch (Exception e) {
+					System.out.println(e.getLocalizedMessage());
+					new ErrorDialog().invoke(e.getMessage());
 					return;
 				}
 			}
@@ -1177,11 +1173,15 @@ public class Interface {
 
 					if (bookList == null || bookList.isEmpty()) {
 						JDialog.setDefaultLookAndFeelDecorated(true);
-						int response = JOptionPane.showConfirmDialog(Query,
+//						int response = JOptionPane.showConfirmDialog(Query,
+//								"No such book in database! Do you want to request for it?", "Not in database",
+//								JOptionPane.INFORMATION_MESSAGE);
+						int response = JOptionPane.showConfirmDialog(loginPanel,
 								"No such book in database! Do you want to request for it?", "Not in database",
 								JOptionPane.INFORMATION_MESSAGE);
 						if (response == JOptionPane.YES_OPTION) {
-							Query.setVisible(false);
+//							Query.setVisible(false);
+							loginPanel.setVisible(false);
 							orderBookPanel.setVisible(true);
 						}
 
@@ -1219,6 +1219,7 @@ public class Interface {
 				// TODO Auto-generated method stub
 				salesclerkPanel.setVisible(false);
 				loginPanel.setVisible(true);
+//				Query.setVisible(true);
 				txtUsername.setText("");
 				passwordField.setText("");
 			}
@@ -1231,6 +1232,7 @@ public class Interface {
 				// TODO Auto-generated method stub
 				ownerPanel.setVisible(false);
 				loginPanel.setVisible(true);
+//				Query.setVisible(true);
 				txtUsername.setText("");
 				passwordField.setText("");
 			}
@@ -1243,6 +1245,7 @@ public class Interface {
 				// TODO Auto-generated method stub
 				generalPanel.setVisible(false);
 				loginPanel.setVisible(true);
+//				Query.setVisible(true);
 				txtUsername.setText("");
 				passwordField.setText("");
 			}
@@ -1255,6 +1258,7 @@ public class Interface {
 				// TODO Auto-generated method stub
 				managerPanel.setVisible(false);
 				loginPanel.setVisible(true);
+//				Query.setVisible(true);
 				txtUsername.setText("");
 				passwordField.setText("");
 			}
@@ -1469,6 +1473,7 @@ public class Interface {
 					int choice = queryBookList.getSelectedIndex();
 					// JOptionPane.showMessageDialog(window, choice);
 					Query.setVisible(false);
+					loginPanel.setVisible(false);
 					viewBook.setVisible(true);
 					// JOptionPane.showMessageDialog(window, model.get(choice));
 					String isbn = "";
@@ -1556,7 +1561,8 @@ public class Interface {
 
 				new ToastMessage("Order was successfully placed", 750);
 				orderBookPanel.setVisible(false);
-				Query.setVisible(true);
+//				Query.setVisible(true);
+				loginPanel.setVisible(true);
 
 			}
 		});
@@ -1624,17 +1630,17 @@ public class Interface {
 			}
 		});
 
-		generate.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				managerPanel.setVisible(false);
-				if (cart != null && cart.getCart() != null && cart.getCart().isEmpty())
-					cart.getCart().clear();
-				genreceiptPanel.setVisible(true);
-
-			}
-		});
+//		generate.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO Auto-generated method stub
+//				managerPanel.setVisible(false);
+//				if (cart != null && cart.getCart() != null && cart.getCart().isEmpty())
+//					cart.getCart().clear();
+//				genreceiptPanel.setVisible(true);
+//
+//			}
+//		});
 
 		btnGetList.addActionListener(new ActionListener() {
 			@Override

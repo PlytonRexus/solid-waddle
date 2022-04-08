@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Book {
 
-	private String bookTitle,authorName;
+	private String bookTitle, authorName;
 	private Publisher publisher;
 	private Integer price;
 	private Integer ISBN;
@@ -35,8 +35,6 @@ public class Book {
 	public void setAverageDays(Integer averageDays) {
 		this.averageDays = averageDays;
 	}
-	
-	
 	
 	public String getBookTitle() {
 		return bookTitle;

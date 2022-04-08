@@ -2,15 +2,14 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-	
+
 <hibernate-mapping package="model">
-<class name="Vendor" table="vendor">
-	<id name="vendorId" column="VENDOR_ID">
-	<generator class="assigned"></generator>
-	</id>
-	<property name="vendorName" column="vendorName"></property>
-	<property name="vendorAddress" column="vendorAddress"></property>
-	<property name="vendorEmail" column="vendorEmail"></property>
+	<class name="Vendor" table="vendors">
+		<id name="vendorId" column="id">
+			<generator class="assigned"></generator>
+		</id>
+		<property name="vendorName" column="name"></property>
+		<property name="vendorAddress" column="address"></property>
+		<property name="vendorEmail" column="email"></property>
 	</class>
-	
 </hibernate-mapping>

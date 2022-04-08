@@ -4,12 +4,12 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 	
 <hibernate-mapping package="model">
-<class name="Employee" table="employee">
+<class name="Employee" table="employees">
 	<id name="id" column="id"></id>
 	<property name="name" column="name"></property>
-	<property name="userName" column="userName"></property>
+	<property name="userName" column="username"></property>
 	<property name="password" column="password"></property>
-	<property name="empCode" column="empCode"></property>
+	<property name="empCode" column="code"></property>
 	</class>
 	
 </hibernate-mapping>

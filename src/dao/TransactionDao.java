@@ -82,7 +82,7 @@ public class TransactionDao {
 		try
 		{
 			
-				Query query2=session.createSQLQuery("select bookISBN,cast(sum(noOfCopies) as SIGNED) as 'count' from transaction where dateOfTransaction BETWEEN :fromDate AND :toDate group by bookISBN;");
+				Query query2=session.createSQLQuery("select ISBN, cast(sum(number_of_copies) as SIGNED) as 'count' from Transaction where date_of_transaction BETWEEN :fromDate AND :toDate group by ISBN;");
 				query2.setParameter("fromDate", fromDate);
 				query2.setParameter("toDate", toDate);
 				List resultList=query2.list();
@@ -101,7 +101,6 @@ public class TransactionDao {
 				     Book book=new BookDao().getBookByISBN(ISBN);
 				     if(book==null)
 				     {
-				    	 System.out.println("DEBUG: Book 123"+" ISBN:"+ISBN);
 				    	 continue;
 				     }
 				     //BigInteger revenue=count.multiply(new BigInteger(book.getPrice().intValue()));
@@ -138,7 +137,7 @@ public class TransactionDao {
 				Calendar calendar=Calendar.getInstance();
 				calendar.add(Calendar.DATE,-14);
 				Date fromDate=calendar.getTime();
-				Query query2=session.createSQLQuery("select cast(sum(noOfCopies) as SIGNED) as 'count' from transaction where bookISBN= :isbn and dateOfTransaction BETWEEN :fromDate AND :toDate group by bookISBN;");
+				Query query2=session.createSQLQuery("select cast(sum(number_of_copies) as SIGNED) as 'count' from Transaction where ISBN = :isbn and date_of_transaction BETWEEN :fromDate AND :toDate group by ISBN;");
 				query2.setParameter("fromDate", fromDate);
 				query2.setParameter("toDate", toDate);
 				query2.setParameter("isbn", ISBN);

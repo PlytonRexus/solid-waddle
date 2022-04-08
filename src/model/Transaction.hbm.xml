@@ -2,15 +2,16 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-	
+
 <hibernate-mapping package="model">
-<class name="Transaction" table="transaction">
-<id name="transactionId" column="transactionId">
-<generator class="native"></generator>
-</id>
-	<property name="bookISBN" column="bookISBN"></property>
-	<property name="dateOfTransaction" column="dateOfTransaction"></property>
-	<property name="noOfCopies" column="noOfCopies"></property>
-</class>
-	
+	<class name="Transaction" table="transactions">
+		<id name="transactionId" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="bookISBN" column="ISBN"></property>
+		<property name="dateOfTransaction"
+			column="date_of_transaction"></property>
+		<property name="noOfCopies" column="number_of_copies"></property>
+	</class>
+
 </hibernate-mapping>

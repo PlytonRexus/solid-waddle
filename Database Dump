@@ -1,27 +1,22 @@
-CREATE DATABASE BAS;
-USE BAS;
+CREATE DATABASE bookshop_automation_system;
+USE bookshop_automation_system;
 
-create table employee( id INT NOT NULL, name VARCHAR(40) NOT NULL, userName VARCHAR(40) ,password VARCHAR(40) , empCode INT NOT NULL);
+CREATE TABLE employees (id INT NOT NULL, name VARCHAR(40) NOT NULL, username VARCHAR(40), password VARCHAR(40), code INT NOT NULL);
 
-create table vendor( VENDOR_ID INT(5) NOT NULL, vendorName VARCHAR(40) NOT NULL ,vendorAddress VARCHAR(40) NOT NULL, vendorEmail VARCHAR(40) NOT NULL, PRIMARY KEY(VENDOR_ID) );
+CREATE TABLE vendors(id INT(5) NOT NULL, name VARCHAR(40) NOT NULL , address VARCHAR(40) NOT NULL, email VARCHAR(40) NOT NULL, PRIMARY KEY(id) );
 
-create table publisher( PUBLISHER_ID INT(5) NOT NULL ,publisherName VARCHAR(40) NOT NULL, vendor_id INT(5) NOT NULL, PRIMARY KEY(PUBLISHER_ID) , CONSTRAINT FK_VEN_ID FOREIGN KEY(vendor_id) REFERENCES vendor(VENDOR_ID) );
+CREATE TABLE publishers (id INT(5) NOT NULL, name VARCHAR(40) NOT NULL, vendor_id INT(5) NOT NULL, PRIMARY KEY(id), CONSTRAINT FK_VEN_ID FOREIGN KEY(vendor_id) REFERENCES vendors(id) );
 
-create table book ( ISBN INT(20) NOT NULL, bookTitle VARCHAR(40) NOT NULL, authorName VARCHAR(40) NOT NULL, price INT(10) NOT NULL, noOfCopies INT(10) NOT NULL, noOfRequests INT(10) NOT NULL, rackNo INT(5) NOT NULL, averageDays INT(5) NOT NULL, imageFileName VARCHAR(40) NOT NULL, publisher_id INT(5) DEFAULT NULL, PRIMARY KEY(ISBN) , CONSTRAINT FK_PUB_ID FOREIGN KEY(publisher_id) REFERENCES publisher(PUBLISHER_ID) ); 
+CREATE TABLE books (ISBN INT(20) NOT NULL, title VARCHAR(40) NOT NULL, author_name VARCHAR(40) NOT NULL, price INT(10) NOT NULL, number_of_copies INT(10) NOT NULL, number_of_requests INT(10) NOT NULL, rack_number INT(5) NOT NULL, average_days INT(5) NOT NULL, image_file_name VARCHAR(40) NOT NULL, publisher_id INT(5) DEFAULT NULL, PRIMARY KEY(ISBN), CONSTRAINT FK_PUB_ID FOREIGN KEY(publisher_id) REFERENCES publishers(id) ); 
 
-alter table book add threshold INT(5);
+ALTER TABLE books add threshold INT(5);
 
-create table sales_day( sales_id INT(5) , date datetime NOT NULL , PRIMARY KEY(sales_id)); 
+CREATE TABLE sales (id INT(5), date datetime NOT NULL, PRIMARY KEY(id)); 
 
-alter table book add idx INT(5) default null;
+ALTER TABLE books add idx INT(5) DEFAULT NULL;
 
-alter table book add sales_id int(5) default null;
+ALTER TABLE books add sales_id int(5) DEFAULT NULL;
 
-create table notInCollection( request_id int(5) not null auto_increment, noOfRequests int(5) default null, bookTitle varchar(40) default null, authorName varchar(40) default null, publisherName varchar(40) default null, ISBNCode int(20) not null , primary key(request_id));
+CREATE TABLE book_requests (id int(5) NOT NULL auto_increment, number_of_requests int(5) DEFAULT NULL, title varchar(40) DEFAULT NULL, author_name varchar(40) DEFAULT NULL, publiser_name varchar(40) DEFAULT NULL, ISBN int(20) NOT NULL, primary key(id));
 
-
- create table transaction ( transactionId INT(5) NOT NULL AUTO_INCREMENT, bookISBN INT(20) NOT NULL, noOfCopies INT(5) NOT NULL, dateOfTransaction Date , primary key(transactionId) );
-
-
-
-
+CREATE TABLE transactions (id INT(5) NOT NULL AUTO_INCREMENT, ISBN INT(20) NOT NULL, number_of_copies INT(5) NOT NULL, date_of_transaction Date, primary key(id) );
