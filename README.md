@@ -12,6 +12,5 @@
 
 <h2>Contributors:</h2>
 
-Rameshwar Bhaskaran [zorroblue](https://www.github.com/zorroblue) <br>
-Aditya Bhagwat [Eraseread](https://www.github.com/Eraseread)
+Mihir Jichkar [PlytonRexus](https://www.github.com/PlytonRexus) <br>
 
